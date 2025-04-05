@@ -1,10 +1,22 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import Playground from '$lib/components/playground/Playground.svelte';
+    import { onMount } from 'svelte';
+    import { getPreCode } from '$lib/utils/precode';
     
     export let data: PageData;
     
     const { course, lable, lableSlug, nextCourse, prevCourse } = data;
+    let initialCode = '// Loading code example...';
+    
+    onMount(async () => {
+        try {
+            // Load pre-code for this course
+            initialCode = await getPreCode(course.slug);
+        } catch (error) {
+            console.error('Error loading pre-code:', error);
+        }
+    });
 </script>
 
 <svelte:head>
@@ -20,7 +32,7 @@
     <!-- Left side - Code playground -->
     <div class="w-full md:w-1/2 bg-base-200 p-4">
         <div class="bg-base-100 rounded-lg h-full">
-            <Playground />
+            <Playground {initialCode} />
         </div>
     </div>
     
