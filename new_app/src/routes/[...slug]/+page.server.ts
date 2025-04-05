@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { getCourse, findNextCourse, findPrevCourse, getJson } from '$lib/utils/course';
 import { getPreCode } from '$lib/utils/precode';
+import { renderMarkdown } from '$lib/utils/markdown';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -12,6 +13,9 @@ export const load: PageServerLoad = async ({ params }) => {
         
         // Pre-load the code example for this course
         const initialCode = await getPreCode(slug);
+        
+        // Process markdown content to HTML
+        course.content = renderMarkdown(course.content);
         
         let lable: string | undefined;
         let lableSlug: string | undefined;
