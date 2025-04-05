@@ -25,6 +25,7 @@
 		"@tailwindcss/vite": "^4.0.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.4",
+		"daisyui": "^5.0.12",
 		"jsdom": "^26.0.0",
 		"mdsvex": "^0.12.3",
 		"prettier": "^3.4.2",
@@ -36,5 +37,8 @@
 		"typescript": "^5.0.0",
 		"vite": "^6.2.5",
 		"vitest": "^3.0.0"
+	},
+	"dependencies": {
+		"gray-matter": "^4.0.3"
 	}
 }
