@@ -33,13 +33,13 @@
 			<!-- Navigation buttons -->
 			<div class="mt-8 flex justify-between">
 				{#if prevCourse}
-					<a href="/{prevCourse}" class="btn btn-primary"> Previous </a>
+					<a href="/{prevCourse}" class="btn btn-primary"> السابق </a>
 				{:else}
 					<div></div>
 				{/if}
 
 				{#if nextCourse}
-					<a href="/{nextCourse}" class="btn btn-primary"> Next </a>
+					<a href="/{nextCourse}" class="btn btn-primary"> التالي </a>
 				{/if}
 			</div>
 		</article>
