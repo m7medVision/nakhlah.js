@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
     import { EditorState } from '@codemirror/state';
-    import { EditorView, keymap } from '@codemirror/view';
+    import { EditorView } from '@codemirror/view';
     import { javascript } from '@codemirror/lang-javascript';
     
     export let initialValue = '// Type your JavaScript code here\nconsole.log("Hello, Nakhlah.js!");\n';
@@ -65,7 +65,7 @@
     }
 </script>
 
-<div class="code-editor h-full" bind:this={element}></div>
+<div dir="ltr" class="code-editor h-full" bind:this={element}></div>
 
 <style>
     .code-editor {

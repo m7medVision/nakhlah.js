@@ -2,7 +2,7 @@
     export let logs: Array<{ type: string; content: any }> = [];
 </script>
 
-<div class="console overflow-y-auto p-4 h-full bg-neutral text-neutral-content rounded-lg">
+<div dir="ltr" class="console overflow-y-auto p-4 h-full bg-neutral text-neutral-content rounded-lg">
     <div class="font-mono text-sm">
         {#if logs.length === 0}
             <div class="text-gray-400 italic">// Console output will appear here</div>
