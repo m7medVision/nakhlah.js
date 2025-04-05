@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { afterUpdate } from 'svelte';
     import CodeEditor from './CodeEditor.svelte';
     import Console from './Console.svelte';
     
@@ -8,6 +9,18 @@
     let code = initialCode;
     let logs: Array<{ type: string; content: any }> = [];
     let editor: CodeEditor;
+    let lastInitialCode = initialCode;
+    
+    afterUpdate(() => {
+        // Check if initialCode prop has changed
+        if (initialCode !== lastInitialCode) {
+            lastInitialCode = initialCode;
+            code = initialCode;
+            if (editor) {
+                editor.setValue(initialCode);
+            }
+        }
+    });
     
     function runCode() {
         logs = [];
@@ -57,7 +70,9 @@
     
     function resetCode() {
         code = initialCode;
-        editor.setValue(initialCode);
+        if (editor) {
+            editor.setValue(initialCode);
+        }
         logs = [];
     }
 </script>
