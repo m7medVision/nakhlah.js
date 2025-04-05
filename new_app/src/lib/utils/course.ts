@@ -1,3 +1,4 @@
+// This file should only be imported from server-side code
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';

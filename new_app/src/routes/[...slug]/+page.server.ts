@@ -1,5 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { getCourse, findNextCourse, findPrevCourse, getJson } from '$lib/utils/course';
+import { getPreCode } from '$lib/utils/precode';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -8,6 +9,9 @@ export const load: PageServerLoad = async ({ params }) => {
         const course = await getCourse(slug);
         const nextCourse = findNextCourse(slug);
         const prevCourse = findPrevCourse(slug);
+        
+        // Pre-load the code example for this course
+        const initialCode = await getPreCode(slug);
         
         let lable: string | undefined;
         let lableSlug: string | undefined;
@@ -28,7 +32,8 @@ export const load: PageServerLoad = async ({ params }) => {
             lable,
             lableSlug,
             nextCourse,
-            prevCourse
+            prevCourse,
+            initialCode
         };
     } catch (e) {
         console.error('Error loading course:', e);
