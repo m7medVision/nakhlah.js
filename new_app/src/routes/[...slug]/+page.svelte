@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { PageData } from './$types';
+    import Playground from '$lib/components/playground/Playground.svelte';
     
     export let data: PageData;
     
@@ -16,17 +17,10 @@
 </svelte:head>
 
 <main class="flex flex-col md:flex-row h-screen">
-    <!-- Left side - Code playground will go here -->
+    <!-- Left side - Code playground -->
     <div class="w-full md:w-1/2 bg-base-200 p-4">
         <div class="bg-base-100 rounded-lg h-full">
-            <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">Console Playground</h2>
-                <p class="text-sm mb-4">This is where the code editor will be implemented</p>
-                <!-- Placeholder for the editor -->
-                <div class="bg-neutral text-neutral-content p-4 rounded-lg h-64">
-                    // Code playground will be implemented here
-                </div>
-            </div>
+            <Playground />
         </div>
     </div>
     
