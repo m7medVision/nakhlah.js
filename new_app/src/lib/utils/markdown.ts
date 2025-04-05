@@ -5,17 +5,17 @@ import { marked } from 'marked';
  * @param content The markdown content to be converted
  * @returns Processed HTML content
  */
-export function renderMarkdown(content: string): string {
-    // Configure marked options if needed
-    marked.setOptions({
-        gfm: true, // GitHub flavored markdown
-        breaks: true, // Convert \n to <br>
-        sanitize: false, // Allow HTML tags in markdown
-        smartLists: true,
-        smartypants: true, // Typographic replacements like quotes and dashes
-        langPrefix: 'language-', // CSS language prefix for code blocks
+export async function renderMarkdown(content: string): Promise<string> {
+    // genreate the html
+    const renderer = new marked.Renderer();
+    let html = await marked(content, {
+        renderer: renderer,
+        gfm: true,
+        breaks: true,
+        pedantic: false,
     });
-    
-    // Convert markdown to HTML
-    return marked.parse(content);
+
+    html = html.replace(/<pre/g, '<pre dir="ltr"');
+    // Add custom styles to the HTML
+    return html
 }

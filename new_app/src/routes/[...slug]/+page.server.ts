@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ params }) => {
         const initialCode = await getPreCode(slug);
         
         // Process markdown content to HTML
-        course.content = renderMarkdown(course.content);
+        course.content = await renderMarkdown(course.content);
         
         let lable: string | undefined;
         let lableSlug: string | undefined;
