@@ -1,8 +1,9 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { getCourses } from '$lib/utils/course';
+    import type { Course, CourseGroup } from '$lib/utils/types';
     
-    let courses = [];
+    let courses: Array<Course | CourseGroup> = [];
     let loading = true;
     
     onMount(async () => {
