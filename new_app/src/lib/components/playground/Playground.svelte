@@ -99,8 +99,13 @@
                         logs = [...logs, { type: 'log', content: `Server Output:\n${result.output}`, source: 'server-test' }];
                     }
                     if (testingStatus === 'success' && !testOutputMessage.includes("No Test")) {
-                        if (typeof window !== 'undefined' && (window as any).tsParticles) {
+                        if (typeof window !== 'undefined' && typeof (window as any).confetti === 'function') {
+                            (window as any).confetti();
+                        } else if (typeof window !== 'undefined' && (window as any).tsParticles && typeof (window as any).tsParticles.confetti === 'function') {
+                            // Fallback to the previous attempt just in case, though less likely for the bundle
                             (window as any).tsParticles.confetti();
+                        } else {
+                            console.warn('Confetti function not found.');
                         }
                     }
 				} else {
