@@ -190,7 +190,7 @@
                     {testOutputMessage}
                 </div>
             {/if}
-			<div class="flex-grow min-h-0"> {/* Wrapper for Console to make it scrollable */}
+			<div class="flex-grow min-h-0"> <!-- Wrapper for Console to make it scrollable -->
                  <Console {logs} />
             </div>
 		</div>
