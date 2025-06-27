@@ -10,7 +10,7 @@ import { spawn } from 'child_process';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const projectRoot = path.resolve(__dirname, '../../../../'); // Adjust based on actual depth
 const testcasesBasePath = path.join(projectRoot, 'src/lib/server/testcases');
-const sandboxRunnerPath = path.join(projectRoot, 'src/lib/server/sandbox_runner.js');
+const sandboxRunnerPath = path.join(projectRoot, 'src/lib/server/sandbox_runner.cjs');
 
 
 export const POST: RequestHandler = async ({ request }) => {
