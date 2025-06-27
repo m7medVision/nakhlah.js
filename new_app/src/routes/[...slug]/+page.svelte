@@ -46,7 +46,7 @@
 	</div>
 	<div class="bg-base-200 w-full p-4 md:w-1/2">
 		<div class="bg-base-100 h-full rounded-lg">
-			<Playground {initialCode} />
+			<Playground {initialCode} slug={course.slug} />
 		</div>
 	</div>
 </main>
