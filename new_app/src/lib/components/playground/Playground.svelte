@@ -1,20 +1,19 @@
 <script lang="ts">
-	import { onMount, afterUpdate } from 'svelte';
+	import { onMount } from 'svelte';
 	import CodeEditor from './CodeEditor.svelte';
 	import Console from './Console.svelte';
 
-	export let initialCode = '// Type your JavaScript code here\nconsole.log("Hello, Nakhlah.js!");\n';
-	export let slug: string; // Slug for the current course/quiz
+	let { initialCode = '// Type your JavaScript code here\nconsole.log("Hello, Nakhlah.js!");\n' } = $props();
 
-	let code = initialCode;
-	let logs: Array<{ type: string; content: any; source?: string }> = [];
+	let code = $state(initialCode);
+	let logs = $state<Array<{ type: string; content: any; source?: string }>>([]);
 	let editor: CodeEditor;
-	let lastInitialCode = initialCode;
+	let lastInitialCode = $state(initialCode);
 
-	let testingStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
-    let testOutputMessage: string = '';
+	let testingStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
+    let testOutputMessage = $state('');
 
-	afterUpdate(() => {
+	$effect(() => {
 		if (initialCode !== lastInitialCode) {
 			lastInitialCode = initialCode;
 			code = initialCode;
@@ -68,67 +67,6 @@
 			console.info = originalConsole.info;
 		}
 	}
-
-	async function handleTestCode() {
-		if (!slug) {
-			logs = [...logs, { type: 'error', content: 'No slug provided for testing.', source: 'system' }];
-            testOutputMessage = 'System Error: Slug not available for testing.';
-            testingStatus = 'error';
-			return;
-		}
-        logs = []; // Clear previous logs
-		testingStatus = 'loading';
-        testOutputMessage = 'Testing in progress...';
-
-		try {
-			const response = await fetch('/api/run-quiz', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ code: editor.getValue(), slug })
-			});
-
-			const result = await response.json();
-
-			if (response.ok) {
-				if (result.success) {
-					testingStatus = 'success';
-                    testOutputMessage = result.output && result.output.includes("No test case found") ? "Content Processed (No Test)" : "Tests Passed!";
-                    if (result.output) {
-                        logs = [...logs, { type: 'log', content: `Server Output:\n${result.output}`, source: 'server-test' }];
-                    }
-                    if (testingStatus === 'success' && !testOutputMessage.includes("No Test")) {
-                        if (typeof window !== 'undefined' && typeof (window as any).confetti === 'function') {
-                            (window as any).confetti();
-                        } else if (typeof window !== 'undefined' && (window as any).tsParticles && typeof (window as any).tsParticles.confetti === 'function') {
-                            // Fallback to the previous attempt just in case, though less likely for the bundle
-                            (window as any).tsParticles.confetti();
-                        } else {
-                            console.warn('Confetti function not found.');
-                        }
-                    }
-				} else {
-					testingStatus = 'error';
-                    testOutputMessage = `Test Failed: ${result.error || 'Unknown error'}`;
-                     if (result.output) {
-                        logs = [...logs, { type: 'log', content: `Server Output:\n${result.output}`, source: 'server-test' }];
-                    }
-				}
-			} else {
-				testingStatus = 'error';
-                testOutputMessage = `Error ${response.status}: ${result.error || result.message || 'Failed to run tests'}`;
-                if (result.output) {
-                     logs = [...logs, { type: 'log', content: `Server Output:\n${result.output}`, source: 'server-test' }];
-                }
-			}
-		} catch (err: any) {
-			testingStatus = 'error';
-            testOutputMessage = `Network or system error: ${err.message}`;
-			logs = [...logs, { type: 'error', content: `Error submitting test: ${err.message}`, source: 'system' }];
-		}
-	}
-
 	function resetCode() {
 		code = initialCode;
 		if (editor) {
@@ -144,29 +82,10 @@
 	<div class="flex items-center justify-between rounded-t-lg bg-base-300 p-2">
 		<div class="text-lg font-bold">Playground</div>
 		<div class="space-x-2">
-			<button class="btn btn-primary btn-sm" on:click={runCode} disabled={testingStatus === 'loading'}>
+			<button class="btn btn-outline btn-sm" onclick={runCode} disabled={testingStatus === 'loading'}>
 				Run Code
 			</button>
-			<button
-                class="btn btn-sm"
-                class:btn-accent={testingStatus === 'idle' || (testingStatus === 'success' && testOutputMessage.includes("No Test"))}
-                class:btn-success={testingStatus === 'success' && !testOutputMessage.includes("No Test")}
-                class:btn-error={testingStatus === 'error'}
-                on:click={handleTestCode}
-                disabled={testingStatus === 'loading' || !slug}
-            >
-				{#if testingStatus === 'loading'}
-					<span class="loading loading-spinner loading-xs"></span>
-					Testing...
-				{:else if testingStatus === 'success'}
-                    {testOutputMessage.includes("No Test") ? "Processed" : "Tests Passed!"}
-                {:else if testingStatus === 'error'}
-                    Test Failed
-				{:else}
-					Test Code
-				{/if}
-			</button>
-			<button class="btn btn-outline btn-sm" on:click={resetCode} disabled={testingStatus === 'loading'}>
+			<button class="btn btn-outline btn-sm" onclick={resetCode} disabled={testingStatus === 'loading'}>
 				Reset
 			</button>
 		</div>

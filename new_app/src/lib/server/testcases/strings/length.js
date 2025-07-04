@@ -1,2 +1,0 @@
-isPass = true;
-msg = "";
