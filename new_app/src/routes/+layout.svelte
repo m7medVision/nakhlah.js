@@ -35,39 +35,60 @@
 
 <div class="flex flex-col min-h-screen" dir="rtl">
     <!-- Navigation -->
-    <header class="navbar bg-base-100 shadow-md">
-        <div class="container mx-auto">
-            <div class="flex-1">
-                <a href="/" class="text-xl font-bold">
-                    <span class="bg-gradient-to-br from-yellow-500 to-yellow-300 bg-clip-text text-transparent font-bold">JS</span>
-                    <span class="ml-1 bg-gradient-to-bl from-base-content to-base-content/80 bg-clip-text text-transparent font-bold">نخلة</span>
-                </a>
-            </div>
-            <div class="flex-none">
-                <ul class="menu menu-horizontal px-1 gap-2">
+    <header class="navbar bg-base-100 shadow-sm sticky top-0 z-50 px-10">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </div>
+                <ul
+                    tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                     <li><a href="/">الرئيسية</a></li>
                     <li><a href="/courses">الدروس</a></li>
-                    <li>
-                        <button class="btn btn-ghost btn-circle" on:click={toggleTheme} aria-label="Toggle theme">
-                            {#if darkMode}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
-                            {:else}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                            {/if}
-                        </button>
-                    </li>
-                    <li>
-                        <a href="https://github.com/m7medVision/nakhlah.js" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-circle" aria-label="GitHub repository">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="fill-current"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
-                        </a>
-                    </li>
                 </ul>
+            </div>
+            <a href="/" class="btn btn-ghost normal-case text-xl gap-1 hover:bg-transparent">
+                <span class="bg-gradient-to-br from-yellow-500 to-yellow-300 bg-clip-text text-transparent font-extrabold">JS</span>
+                <span class="bg-gradient-to-bl from-base-content to-base-content/80 bg-clip-text text-transparent font-extrabold">نخلة</span>
+            </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="/" class="btn btn-ghost btn-sm rounded-lg">الرئيسية</a></li>
+                <li><a href="/courses" class="btn btn-ghost btn-sm rounded-lg">الدروس</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <div class="flex items-center gap-1">
+                <button 
+                    class="btn btn-ghost btn-sm btn-circle"
+                    on:click={toggleTheme}
+                    aria-label="Toggle theme"
+                >
+                    {#if darkMode}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+                    {:else}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    {/if}
+                </button>
+                <a 
+                    href="https://github.com/m7medVision/nakhlah.js"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-ghost btn-sm btn-circle"
+                    aria-label="GitHub repository"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
             </div>
         </div>
     </header>
     
     <!-- Main content -->
-    <main class="flex-grow container mx-auto p-4 md:p-6 lg:p-8">
+    <main class="flex-grow mx-auto w-screen px-28 py-10">
         <slot />
     </main>
 </div>

@@ -4,7 +4,7 @@
 
 	export let data: PageData;
 
-	const { course, lable, lableSlug, nextCourse, prevCourse, initialCode } = data;
+	const { course, lable, nextCourse, prevCourse, initialCode } = data;
 </script>
 
 <svelte:head>
@@ -16,13 +16,7 @@
 	<meta property="og:url" content={`https://nakhlahjs.com/${course.slug}`} />
 </svelte:head>
 
-<!--
-  The main padding and container are handled by +layout.svelte.
-  This flex container will manage the two-column layout for the course content and playground.
-  It will stack vertically on small screens and become a row on medium screens and up.
--->
 <div class="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8">
-	<!-- Left Column: Markdown Content -->
 	<div class="w-full md:w-3/5 lg:w-2/3 md:order-1 order-2 flex flex-col">
 		<article class="prose prose-lg max-w-none bg-base-100 p-4 sm:p-6 rounded-box shadow">
 			<h1 class="text-3xl md:text-4xl font-bold !mb-4">{course.title}</h1>
@@ -31,12 +25,10 @@
 				<div class="badge badge-primary my-4">{lable}</div>
 			{/if}
 
-			<!-- Render markdown content -->
 			<div class="markdown-content">
 				{@html course.content}
 			</div>
 
-			<!-- Navigation buttons -->
 			<div class="mt-8 flex justify-between">
 				{#if prevCourse}
 					<a href="/{prevCourse}" class="btn btn-outline btn-primary">
@@ -44,7 +36,7 @@
                         السابق
                     </a>
 				{:else}
-					<div></div> <!-- Empty div to maintain layout -->
+					<div></div>
 				{/if}
 
 				{#if nextCourse}
@@ -57,14 +49,10 @@
 		</article>
 	</div>
 
-	<!-- Right Column: Playground -->
-    <!-- order-1 makes playground appear first on mobile (top) -->
-	<div class="w-full md:w-2/5 lg:w-1/3 md:order-2 order-1 md:sticky md:top-24 h-auto md:h-[calc(100vh-7rem)]">
-        <!-- The md:h- value attempts to make the playground sticky and scrollable within its column,
-             adjust 7rem based on actual navbar height + desired top offset -->
+	<div class="md:order-2 order-1 md:sticky md:top-24 h-auto md:h-[calc(100vh-7rem)] w-1/2">
 		<div class="bg-base-200 p-2 sm:p-3 rounded-box shadow h-full">
 			<div class="bg-base-100 h-full rounded-lg">
-				<Playground {initialCode} slug={course.slug} />
+				<Playground {initialCode} />
 			</div>
 		</div>
 	</div>

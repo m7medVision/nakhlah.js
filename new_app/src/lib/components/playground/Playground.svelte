@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import CodeEditor from './CodeEditor.svelte';
 	import Console from './Console.svelte';
 
@@ -20,8 +19,8 @@
 			if (editor) {
 				editor.setValue(initialCode);
 			}
-            logs = []; // Clear logs when initial code changes
-            testingStatus = 'idle'; // Reset testing status
+            logs = [];
+            testingStatus = 'idle';
             testOutputMessage = '';
 		}
 	});
@@ -92,12 +91,10 @@
 	</div>
 
 	<div class="grid flex-grow grid-rows-2 gap-2 rounded-b-lg bg-base-200 p-2">
-		<!-- Code Editor -->
 		<div class="h-full">
 			<CodeEditor bind:this={editor} initialValue={code} onChange={(value) => (code = value)} />
 		</div>
 
-		<!-- Console Output -->
 		<div class="h-full flex flex-col">
             {#if testOutputMessage}
                 <div
@@ -114,7 +111,7 @@
                     {testOutputMessage}
                 </div>
             {/if}
-			<div class="flex-grow min-h-0"> <!-- Wrapper for Console to make it scrollable -->
+			<div class="flex-grow min-h-0">
                  <Console {logs} />
             </div>
 		</div>
@@ -130,11 +127,10 @@
         flex-direction: column;
         min-height: 0;
     }
-    /* Ensure Console component itself can be scrollable if its content overflows */
     .playground .h-full > .flex-grow > :global(div:first-child),
-    .playground .h-full > :global(div:first-child) { /* Target direct child of CodeEditor/Console wrapper OR Console itself if it's the direct child */
+    .playground .h-full > :global(div:first-child) {
         flex-grow: 1;
         min-height: 0;
-        overflow: auto; /* Fallback, ideally Console component handles its own scrolling */
+        overflow: auto;
     }
 </style>
