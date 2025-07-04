@@ -25,7 +25,7 @@ function handleCodeRun(code) {
 
 const output = handleCodeRun(code)
 if (output == "1500") {
-    if (code.includes("console.log(1500)" || 'console.log("1500")' || "console.log('1500')")) {
+    if (code.includes("console.log(1500)") || code.includes('console.log("1500")') || code.includes("console.log('1500')")) {
         msg = "لا تحتال علينا, حاول مرة أخرى";
     } else {
         isPass = true;
