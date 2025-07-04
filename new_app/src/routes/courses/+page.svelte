@@ -34,7 +34,7 @@
 									>
 										<!-- Using a simpler dot or a DaisyUI-compatible icon if available -->
 										<span
-											class="bg-primary ml-2 inline-block h-2 w-2 rounded-full rtl:ml-2 rtl:ml-0"
+											class="bg-primary ml-2 inline-block h-2 w-2 rounded-full rtl:ml-2"
 										></span>
 										{course.title}
 									</a>
