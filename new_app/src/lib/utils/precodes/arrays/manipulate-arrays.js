@@ -1,1 +1,0 @@
-const myArray = ["a", "b", "c", "d"];

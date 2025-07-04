@@ -1,3 +1,0 @@
-function area() {
-    return null;
-}
