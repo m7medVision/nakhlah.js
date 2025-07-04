@@ -27,11 +27,13 @@ export const POST: RequestHandler = async ({ request }) => {
 
         const testCaseFileName = `${slug}.js`;
         // Basic security check for slug to prevent path traversal
-        if (slug.includes('..') || slug.includes('/') || !/^[a-zA-Z0-9_-]+$/.test(slug.split('/').pop() || slug)) {
-            console.error(`Invalid slug format detected: ${slug}`);
+        const testCasePath = path.resolve(testcasesBasePath, testCaseFileName);
+
+        // Securely check for path traversal
+        if (!testCasePath.startsWith(path.resolve(testcasesBasePath))) {
+            console.error(`Path traversal attempt detected for slug: ${slug}`);
             throw error(400, 'Invalid slug format');
         }
-        const testCasePath = path.join(testcasesBasePath, testCaseFileName);
 
         let testCaseCode: string;
         try {
