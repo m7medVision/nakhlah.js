@@ -19,7 +19,7 @@ export async function getPreCode(slug: string): Promise<string> {
     
     try {
         // Construct the path to the pre-code file
-        const precodePath = path.join(process.cwd(), 'src', 'lib', 'utils', 'precodes', `${slug}.js`);
+        const precodePath = path.join(process.cwd(), 'src', 'lib', 'precodes', `${slug}.js`);
         
         // Check if the file exists and read it
         const text = await fs.readFile(precodePath, 'utf-8');
